@@ -9,10 +9,12 @@ using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Net.Http;
+
 
 namespace consoleScanner
 {
-
+   
     readonly struct IPRangeResult
     {
         public uint Local { get; }
@@ -29,6 +31,8 @@ namespace consoleScanner
 
     static class Program
     {
+        public static int prefix;
+
         [DllImport("iphlpapi.dll", ExactSpelling = true)]
         public static extern int SendARP(uint destinationIP, uint sourceIP,
                byte[] macAddress, ref uint macAddressLength);
@@ -36,6 +40,13 @@ namespace consoleScanner
         {
             Console.WriteLine("!");
             ScanLocalNetwork();
+        }
+
+        static async Task<string> LookupMac(string MacAddress)
+        {
+            var uri = new Uri("http://api.macvendors.com/" + WebUtility.UrlEncode(MacAddress));
+            using var wc = new HttpClient();
+            return await wc.GetStringAsync(uri);
         }
 
         static NetworkInterface[] ScanInterfaces()
@@ -46,24 +57,36 @@ namespace consoleScanner
             Console.WriteLine("Interfaces count - {0}\n", adapters.Length);
 
             return adapters;
-
         }
 
         static bool CheckWorkingInterface(NetworkInterface netInt)
         {
             return (netInt.NetworkInterfaceType != NetworkInterfaceType.Loopback &&
                             netInt.OperationalStatus == OperationalStatus.Up);
+
         }
 
 
         static void ScanLocalNetwork()
         {
             NetworkInterface[] adapters = ScanInterfaces();
-
             foreach (NetworkInterface net in adapters)
             {
                 if (CheckWorkingInterface(net))
                 {
+                    Console.WriteLine("Interface name: {0}", net.Description);
+                    Console.WriteLine("Mac-address: {0}\n", BitConverter.ToString(net.GetPhysicalAddress().GetAddressBytes()));
+                }
+            }
+            Console.WriteLine("");
+            uint counter = 0;
+
+            foreach (NetworkInterface net in adapters)
+            {
+                counter++;
+                if (CheckWorkingInterface(net))
+                {
+                    
                     Console.WriteLine($"Interface - {net.Description}");
                     ScanNetwork(net);
                     Console.WriteLine("");
@@ -76,12 +99,11 @@ namespace consoleScanner
             IPRangeResult ips = GetIPRange(netInterface);
 
             List<uint> allIps = new List<uint>();
+
             for (uint ip = ips.First; ip < ips.Last; IncrementIP(ref ip))
             {
                 allIps.Add(ip);
             }
-
-            Console.WriteLine("_");
 
             Parallel.ForEach(allIps, ip =>
             {
@@ -89,10 +111,21 @@ namespace consoleScanner
                 uint macAddressLength = 6;
                 int arpResult = SendARP(ip, ips.Local, macAddress, ref macAddressLength);
 
+                string vendor = string.Empty;
+
                 IPAddress add = new IPAddress(ip);
                 if (arpResult == 0)
                 {
-                    Console.WriteLine($"{add} : {GetMacString(macAddress)}");
+                    try
+                    {
+                        vendor = LookupMac(GetMacString(macAddress).Replace("-", ":")).Result;
+                    }
+                    catch (Exception ex)
+                    {
+                        vendor = "Not found";
+                    }
+                    
+                    Console.WriteLine($"{add} : {GetMacString(macAddress)} - {vendor}");
                 }
             });
         }
@@ -124,11 +157,14 @@ namespace consoleScanner
                     uint subnet = (ip.IPv4Mask.GetAddressBytes()).ToUInt();
 
                     uint first = localIp & subnet;
-                    uint last = first | (0xffffffff & ~subnet);
+                    uint last = first | (~subnet);
+
+                    prefix = ip.PrefixLength;
 
                     if (BitConverter.IsLittleEndian)
                     {
-                        first += 1 << 24;
+                        first += (uint)(1 << prefix);
+                        last -= (uint)(1 << prefix);
                     }
                     else
                     {
@@ -160,7 +196,7 @@ namespace consoleScanner
         {
             if (BitConverter.IsLittleEndian)
             {
-                address += 1 << 24;
+                address += (uint)1 << prefix;
             }
             else
             {
