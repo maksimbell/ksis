@@ -5,6 +5,7 @@ namespace MailerGUI
 {
     public partial class LoginForm : Form
     {
+        private UserPackage userPackage;
         public LoginForm()
         {
             InitializeComponent();
@@ -12,8 +13,11 @@ namespace MailerGUI
 
         private void btnLogin_Click(object sender, EventArgs e)
         {
-            /*MailClient clientForm = new MailClient();
-            clientForm.Show();*/
+            userPackage = new UserPackage(loginArea.Text, 
+                passwordArea.Text, int.Parse(tbPort.Text), cbServer.Text, cbSsl.Checked);
+
+            MailClient clientForm = new MailClient(userPackage);
+            clientForm.Show();
         }
 
         private void cbSsl_CheckedChanged(object sender, EventArgs e)
@@ -28,6 +32,9 @@ namespace MailerGUI
 
             tbPort.Text = "995";
             cbSsl.Checked = true;
+
+            loginArea.Text = "lilfidgetx@gmail.com";
+            passwordArea.Text = "rtsgvxxyjwjitasz";
         }
     }
 }

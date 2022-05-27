@@ -15,23 +15,22 @@ namespace MailerGUI
 {
     public partial class MailClient : Form
     {
-        private Pop3Client client = null;
+        private Pop3Client client;
 
-        public MailClient(string login, string pswrd)
+        public MailClient(UserPackage userPackage)
         {
             InitializeComponent();
-            CreateMailClient(login, pswrd);
+            CreateMailClient(userPackage);
         }
-        public void CreateMailClient(string login, string pswrd)
+        public void CreateMailClient(UserPackage userPackage)
         {
             var client = new Pop3Client();
-            client.Connect("pop.gmail.com", 995, true);
-            client.Authenticate("piotr@mailtrap.io", "My_password_here");
+            client.Connect(userPackage.Server, userPackage.Port, userPackage.Ssl);
+            client.Authenticate(userPackage.Login, userPackage.Password);
 
             var count = client.GetMessageCount();
             OpenPop.Mime.Message message = client.GetMessage(count);
             Console.WriteLine(message.Headers.Subject);
-
         }
 
         private void MailClient_Load(object sender, EventArgs e)
