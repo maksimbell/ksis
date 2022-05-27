@@ -17,10 +17,10 @@ namespace MailerGUI
     {
         private Pop3Client client = null;
 
-        public MailClient()
+        public MailClient(string login, string pswrd)
         {
             InitializeComponent();
-            //CreateMailClient(login, pswrd);
+            CreateMailClient(login, pswrd);
         }
         public void CreateMailClient(string login, string pswrd)
         {
@@ -31,6 +31,11 @@ namespace MailerGUI
             var count = client.GetMessageCount();
             OpenPop.Mime.Message message = client.GetMessage(count);
             Console.WriteLine(message.Headers.Subject);
+
+        }
+
+        private void MailClient_Load(object sender, EventArgs e)
+        {
 
         }
     }
