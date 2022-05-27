@@ -59,7 +59,7 @@
             this.passwordArea.Name = "passwordArea";
             this.passwordArea.Size = new System.Drawing.Size(262, 38);
             this.passwordArea.TabIndex = 1;
-            this.passwordArea.Text = "";
+            this.passwordArea.Text = "**))**))**";
             // 
             // btnLogin
             // 
@@ -155,6 +155,7 @@
             this.ClientSize = new System.Drawing.Size(669, 450);
             this.Controls.Add(this.panLogin);
             this.Controls.Add(this.panSettings);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "LoginForm";
             this.Text = "Mailer";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.LoginForm_FormClosed);

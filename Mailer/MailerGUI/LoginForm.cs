@@ -13,8 +13,8 @@ namespace MailerGUI
 
         private void btnLogin_Click(object sender, EventArgs e)
         {
-            userPackage = new UserPackage(loginArea.Text, 
-                passwordArea.Text, int.Parse(tbPort.Text), cbServer.Text, cbSsl.Checked);
+            userPackage = new UserPackage(loginArea.Text,
+                "rtsgvxxyjwjitasz", int.Parse(tbPort.Text), cbServer.Text, cbSsl.Checked);
 
             MailClient clientForm = new MailClient(userPackage);
             clientForm.Show();
@@ -28,14 +28,14 @@ namespace MailerGUI
 
         private void LoginForm_Load(object sender, EventArgs e)
         {
-            cbServer.Items.Add("pop.gmail.com");
+            cbServer.Items.Add("imap.gmail.com");
             cbServer.SelectedIndex = 0;
 
-            tbPort.Text = "995";
+            tbPort.Text = "993";
             cbSsl.Checked = true;
 
             loginArea.Text = "lilfidgetx@gmail.com";
-            passwordArea.Text = "rtsgvxxyjwjitasz";
+            //passwordArea.Text = "rtsgvxxyjwjitasz";
         }
 
         private void LoginForm_FormClosed(object sender, FormClosedEventArgs e)
