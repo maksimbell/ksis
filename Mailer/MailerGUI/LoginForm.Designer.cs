@@ -157,6 +157,7 @@
             this.Controls.Add(this.panSettings);
             this.Name = "LoginForm";
             this.Text = "Mailer";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.LoginForm_FormClosed);
             this.Load += new System.EventHandler(this.LoginForm_Load);
             this.panSettings.ResumeLayout(false);
             this.panSettings.PerformLayout();

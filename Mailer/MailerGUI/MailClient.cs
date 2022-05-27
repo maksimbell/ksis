@@ -37,5 +37,10 @@ namespace MailerGUI
         {
 
         }
+
+        private void MailClient_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            //LoginForm.ActiveForm.Show();
+        }
     }
 }

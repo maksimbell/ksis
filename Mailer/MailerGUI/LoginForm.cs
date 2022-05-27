@@ -18,6 +18,7 @@ namespace MailerGUI
 
             MailClient clientForm = new MailClient(userPackage);
             clientForm.Show();
+            //this.Hide();
         }
 
         private void cbSsl_CheckedChanged(object sender, EventArgs e)
@@ -35,6 +36,11 @@ namespace MailerGUI
 
             loginArea.Text = "lilfidgetx@gmail.com";
             passwordArea.Text = "rtsgvxxyjwjitasz";
+        }
+
+        private void LoginForm_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            
         }
     }
 }
