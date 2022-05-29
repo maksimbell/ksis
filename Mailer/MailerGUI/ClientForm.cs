@@ -24,6 +24,7 @@ namespace MailerGUI
             mailer = new Mailer(userPackage);
             mailMessages = mailer.LoadMail();
             LoadMailForm();
+            lbMail.SelectedIndex = 0;
         }
 
         private void LoadMailForm()
@@ -70,13 +71,23 @@ namespace MailerGUI
 
         private void LoadMessageContent(int index)
         {
-            lblSubject.Text = mailMessages[index].Subject;
+            rtbSubject.Text = mailMessages[index].Subject;
             lblSenderOrg.Text = mailMessages[index].Sender[0].Name;
             lblDate.Text = mailMessages[index].Date.ToString().Substring(0, 10);
             rtbContent.Text = mailMessages[index].Body.Text;
         }
 
         private void lblSubject_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void lblDate_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void lblSenderOrg_Click(object sender, EventArgs e)
         {
 
         }

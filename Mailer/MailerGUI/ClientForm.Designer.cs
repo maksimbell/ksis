@@ -32,11 +32,11 @@
             this.tabMail = new System.Windows.Forms.TabPage();
             this.lbMail = new System.Windows.Forms.ListBox();
             this.panContent = new System.Windows.Forms.Panel();
+            this.rtbSubject = new System.Windows.Forms.RichTextBox();
+            this.rtbContent = new System.Windows.Forms.RichTextBox();
             this.lblDate = new System.Windows.Forms.Label();
             this.lblSenderOrg = new System.Windows.Forms.Label();
-            this.lblSubject = new System.Windows.Forms.Label();
             this.tabSend = new System.Windows.Forms.TabPage();
-            this.rtbContent = new System.Windows.Forms.RichTextBox();
             this.tabMailer.SuspendLayout();
             this.tabMail.SuspendLayout();
             this.panContent.SuspendLayout();
@@ -80,45 +80,55 @@
             // 
             // panContent
             // 
+            this.panContent.Controls.Add(this.rtbSubject);
             this.panContent.Controls.Add(this.rtbContent);
             this.panContent.Controls.Add(this.lblDate);
             this.panContent.Controls.Add(this.lblSenderOrg);
-            this.panContent.Controls.Add(this.lblSubject);
             this.panContent.Location = new System.Drawing.Point(497, 6);
             this.panContent.Name = "panContent";
             this.panContent.Size = new System.Drawing.Size(627, 483);
             this.panContent.TabIndex = 1;
             // 
+            // rtbSubject
+            // 
+            this.rtbSubject.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.rtbSubject.Font = new System.Drawing.Font("Arial", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.rtbSubject.Location = new System.Drawing.Point(36, 24);
+            this.rtbSubject.Name = "rtbSubject";
+            this.rtbSubject.Size = new System.Drawing.Size(550, 72);
+            this.rtbSubject.TabIndex = 4;
+            this.rtbSubject.Text = "";
+            // 
+            // rtbContent
+            // 
+            this.rtbContent.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.rtbContent.Location = new System.Drawing.Point(36, 144);
+            this.rtbContent.Name = "rtbContent";
+            this.rtbContent.Size = new System.Drawing.Size(550, 324);
+            this.rtbContent.TabIndex = 3;
+            this.rtbContent.Text = "";
+            // 
             // lblDate
             // 
             this.lblDate.AutoSize = true;
             this.lblDate.Font = new System.Drawing.Font("Arial Narrow", 10.2F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point);
-            this.lblDate.Location = new System.Drawing.Point(469, 91);
+            this.lblDate.Location = new System.Drawing.Point(462, 99);
             this.lblDate.Name = "lblDate";
-            this.lblDate.Size = new System.Drawing.Size(40, 22);
+            this.lblDate.Size = new System.Drawing.Size(66, 22);
             this.lblDate.TabIndex = 2;
-            this.lblDate.Text = "Date";
+            this.lblDate.Text = "MailDate";
+            this.lblDate.Click += new System.EventHandler(this.lblDate_Click);
             // 
             // lblSenderOrg
             // 
             this.lblSenderOrg.AutoSize = true;
             this.lblSenderOrg.Font = new System.Drawing.Font("Arial", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.lblSenderOrg.Location = new System.Drawing.Point(68, 92);
+            this.lblSenderOrg.Location = new System.Drawing.Point(36, 100);
             this.lblSenderOrg.Name = "lblSenderOrg";
             this.lblSenderOrg.Size = new System.Drawing.Size(98, 21);
             this.lblSenderOrg.TabIndex = 1;
             this.lblSenderOrg.Text = "SenderOrg";
-            // 
-            // lblSubject
-            // 
-            this.lblSubject.AutoSize = true;
-            this.lblSubject.Font = new System.Drawing.Font("Arial", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.lblSubject.Location = new System.Drawing.Point(28, 50);
-            this.lblSubject.Name = "lblSubject";
-            this.lblSubject.Size = new System.Drawing.Size(127, 26);
-            this.lblSubject.TabIndex = 0;
-            this.lblSubject.Text = "SubjectText";
-            this.lblSubject.Click += new System.EventHandler(this.lblSubject_Click);
+            this.lblSenderOrg.Click += new System.EventHandler(this.lblSenderOrg_Click);
             // 
             // tabSend
             // 
@@ -129,14 +139,6 @@
             this.tabSend.TabIndex = 0;
             this.tabSend.Text = "Write";
             this.tabSend.UseVisualStyleBackColor = true;
-            // 
-            // rtbContent
-            // 
-            this.rtbContent.Location = new System.Drawing.Point(36, 170);
-            this.rtbContent.Name = "rtbContent";
-            this.rtbContent.Size = new System.Drawing.Size(550, 278);
-            this.rtbContent.TabIndex = 3;
-            this.rtbContent.Text = "";
             // 
             // ClientForm
             // 
@@ -163,10 +165,10 @@
         private TabPage tabSend;
         private TabPage tabMail;
         private Panel panContent;
-        private Label lblSubject;
         public ListBox lbMail;
         private Label lblSenderOrg;
         private Label lblDate;
         private RichTextBox rtbContent;
+        private RichTextBox rtbSubject;
     }
 }
