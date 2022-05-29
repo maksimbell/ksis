@@ -8,6 +8,7 @@ using System.Net.Mail;
 using MailKit;
 using MailKit.Search;
 using MimeKit;
+using System.Net;
 
 namespace MailerGUI
 {
@@ -23,7 +24,9 @@ namespace MailerGUI
             Imap.Connect(userPackage.Server, userPackage.Port, userPackage.Ssl);
             Imap.Authenticate(userPackage.Login, userPackage.Password);
 
-            Smtp = new SmtpClient();
+            Smtp = new SmtpClient(userPackage.Server, userPackage.Port);
+            Smtp.Credentials = new NetworkCredential(userPackage.Login, userPackage.Password);
+            Smtp.EnableSsl = userPackage.Ssl;
         }
         public List<MailMessage> LoadMail()
         {
@@ -33,7 +36,7 @@ namespace MailerGUI
 
             List<MailMessage> mail = new List<MailMessage>();
 
-            for (int i = 0; i < 20; i++)
+            for (int i = 0; i < 5; i++)
             {
                 var message = Imap.Inbox.GetMessage(uids.Count - i - 1);
                 mail.Add(new MailMessage(

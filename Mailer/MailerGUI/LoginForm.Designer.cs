@@ -59,7 +59,7 @@
             this.passwordArea.Name = "passwordArea";
             this.passwordArea.Size = new System.Drawing.Size(262, 38);
             this.passwordArea.TabIndex = 1;
-            this.passwordArea.Text = "*********";
+            this.passwordArea.Text = "";
             // 
             // btnLogin
             // 
