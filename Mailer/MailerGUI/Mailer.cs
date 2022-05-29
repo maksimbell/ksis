@@ -38,24 +38,10 @@ namespace MailerGUI
                 var message = Imap.Inbox.GetMessage(uids.Count - i - 1);
                 mail.Add(new MailMessage(
                     message.Subject,
-                    message.HtmlBody,
+                    (TextPart)message.BodyParts.OfType<TextPart>().FirstOrDefault(),
                     message.Date,
                     message.From)
                    );
-
-                /*gridMail.Rows.Add(1);
-                var message = Imap.Inbox.GetMessage(uids.Count - i - 1);
-                gridMail.Rows[i].Cells[0].Value = message.From[0].ToString();
-                if (message.Subject != null)
-                {
-                    gridMail.Rows[i].Cells[1].Value = message.Subject.ToString();
-                }
-                else
-                {
-                    gridMail.Rows[i].Cells[1].Value = "";
-                }
-
-                gridMail.Rows[i].Cells[2].Value = message.Date.ToString().Substring(0, 10);*/
             }
             return mail;
         }

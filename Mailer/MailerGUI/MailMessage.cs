@@ -10,11 +10,11 @@ namespace MailerGUI
     public class MailMessage
     {
         public string Subject { get; set; }
-        public string Body { get; set; }
+        public TextPart Body { get; set; }
         public DateTimeOffset Date { get; set; }
         public InternetAddressList Sender { get; set; }
 
-        public MailMessage(string sub, string body, DateTimeOffset date, InternetAddressList sender)
+        public MailMessage(string sub, TextPart body, DateTimeOffset date, InternetAddressList sender)
         {
             this.Subject = sub;
             this.Body = body;

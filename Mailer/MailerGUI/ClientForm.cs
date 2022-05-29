@@ -30,63 +30,17 @@ namespace MailerGUI
         {
             for (int i = 0; i < mailMessages.Count; i++)
             {
-                string mailString = mailMessages[i].Sender[0].Name;
+                string mailString = mailMessages[i].Sender[0].Name + "  |  " + 
+                    mailMessages[i].Subject.PadRight(15, ' ').Substring(0, 15) + "...  |  " +
+                    mailMessages[i].Date.ToString().Substring(0,10);
                 lbMail.Items.Add(mailString);
                 
             }
-            /*for(int i = 0; i < mailMessages.Count; i++)
-            {
-                gridMail.Rows.Add(1);
-                gridMail.Rows[i].Cells[0].Value = mailMessages[i].Sender;
-                if (mailMessages[i].Subject != null)
-                {
-                    gridMail.Rows[i].Cells[1].Value = mailMessages[i].Subject;
-                }
-                else
-                {
-                    gridMail.Rows[i].Cells[1].Value = "";
-                }
-
-                gridMail.Rows[i].Cells[2].Value = mailMessages[i].Date;
-            }*/
-        }
-
-        public void SetImapClient(UserPackage userPackage)
-        {
-            //client = new ImapClient(); 
-            /*using (client = new ImapClient())
-            {
-                client.Connect(userPackage.Server, userPackage.Port, userPackage.Ssl);
-
-                client.Authenticate(userPackage.Login, userPackage.Password);
-
-                var inbox = client.Inbox;
-                client.Inbox.Open(FolderAccess.ReadOnly);
-                var uids = client.Inbox.Search(SearchQuery.All);
-
-                for (int i = 0; i < 10; i++)
-                {
-                    gridMail.Rows.Add(1);
-                    var message = client.Inbox.GetMessage(uids.Count - i - 1);
-                    gridMail.Rows[i].Cells[0].Value = message.From[0].ToString();
-                    if (message.Subject != null)
-                    {
-                        gridMail.Rows[i].Cells[1].Value = message.Subject.ToString();
-                    }
-                    else
-                    {
-                        gridMail.Rows[i].Cells[1].Value = "";
-                    }
-
-                    gridMail.Rows[i].Cells[2].Value = message.Date.ToString().Substring(0, 10);
-                }
-
-            }*/
         }
 
         private void MailClient_Load(object sender, EventArgs e)
         {
-
+            //lbMail.ItemHeight = 100;
         }
 
         private void MailClient_FormClosed(object sender, FormClosedEventArgs e)
@@ -105,6 +59,24 @@ namespace MailerGUI
         }
 
         private void gridMail_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void lbMail_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            LoadMessageContent(lbMail.SelectedIndex);
+        }
+
+        private void LoadMessageContent(int index)
+        {
+            lblSubject.Text = mailMessages[index].Subject;
+            lblSenderOrg.Text = mailMessages[index].Sender[0].Name;
+            lblDate.Text = mailMessages[index].Date.ToString().Substring(0, 10);
+            rtbContent.Text = mailMessages[index].Body.Text;
+        }
+
+        private void lblSubject_Click(object sender, EventArgs e)
         {
 
         }
