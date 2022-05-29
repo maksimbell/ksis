@@ -10,25 +10,51 @@ using System.Windows.Forms;
 using MailKit;
 using MailKit.Net.Imap;
 using MailKit.Search;
+using MimeKit;
 
 namespace MailerGUI
 {
-    public partial class MailClient : Form
+    public partial class ClientForm : Form
     {
-        private ImapClient client;
-
-        public MailClient(UserPackage userPackage)
+        private Mailer mailer;
+        private List<MailMessage> mailMessages;
+        public ClientForm(UserPackage userPackage)
         {
             InitializeComponent();
-            SetImapClient(userPackage);
+            mailer = new Mailer(userPackage);
+            mailMessages = mailer.LoadMail();
+            LoadMailForm();
         }
+
+        private void LoadMailForm()
+        {
+            for (int i = 0; i < mailMessages.Count; i++)
+            {
+                string mailString = mailMessages[i].Sender[0].Name;
+                lbMail.Items.Add(mailString);
+                
+            }
+            /*for(int i = 0; i < mailMessages.Count; i++)
+            {
+                gridMail.Rows.Add(1);
+                gridMail.Rows[i].Cells[0].Value = mailMessages[i].Sender;
+                if (mailMessages[i].Subject != null)
+                {
+                    gridMail.Rows[i].Cells[1].Value = mailMessages[i].Subject;
+                }
+                else
+                {
+                    gridMail.Rows[i].Cells[1].Value = "";
+                }
+
+                gridMail.Rows[i].Cells[2].Value = mailMessages[i].Date;
+            }*/
+        }
+
         public void SetImapClient(UserPackage userPackage)
         {
-            /*var client = new ImapClient();
-            client.Connect(userPackage.Server, userPackage.Port, true);
-            client.Authenticate(userPackage.Login, userPackage.Password);*/
-
-            using (client = new ImapClient())
+            //client = new ImapClient(); 
+            /*using (client = new ImapClient())
             {
                 client.Connect(userPackage.Server, userPackage.Port, userPackage.Ssl);
 
@@ -36,10 +62,9 @@ namespace MailerGUI
 
                 var inbox = client.Inbox;
                 client.Inbox.Open(FolderAccess.ReadOnly);
-                var uids = client.Inbox.Search(SearchQuery.Seen);
+                var uids = client.Inbox.Search(SearchQuery.All);
 
-                //get all the messages from the specified folder
-                for (int i = 0; i < 20; i++)
+                for (int i = 0; i < 10; i++)
                 {
                     gridMail.Rows.Add(1);
                     var message = client.Inbox.GetMessage(uids.Count - i - 1);
@@ -52,10 +77,11 @@ namespace MailerGUI
                     {
                         gridMail.Rows[i].Cells[1].Value = "";
                     }
+
                     gridMail.Rows[i].Cells[2].Value = message.Date.ToString().Substring(0, 10);
                 }
 
-            }
+            }*/
         }
 
         private void MailClient_Load(object sender, EventArgs e)

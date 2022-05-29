@@ -16,7 +16,7 @@ namespace MailerGUI
             userPackage = new UserPackage(loginArea.Text,
                 "rtsgvxxyjwjitasz", int.Parse(tbPort.Text), cbServer.Text, cbSsl.Checked);
 
-            MailClient clientForm = new MailClient(userPackage);
+            ClientForm clientForm = new ClientForm(userPackage);
             clientForm.Show();
             //this.Hide();
         }
