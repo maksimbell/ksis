@@ -63,7 +63,7 @@ namespace MailerGUI
                 Smtp.Send(mailMessage);
             }catch (Exception ex)
             {
-                throw new CustomSmtpException("Fail");
+                throw new CustomMailerException("Fail");
             }
         }
     }

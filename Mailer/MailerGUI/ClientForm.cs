@@ -21,15 +21,34 @@ namespace MailerGUI
         private List<CustomMessage> mailMessages;
         private List<Attachment> attachments = new List<Attachment>();
         //private MailMessage message;
-        public ClientForm(UserPackage userPackage)
-        {
-            InitializeComponent();
-            mailer = new Mailer(userPackage);
-            mailMessages = mailer.LoadMail();
-            LoadMailForm();
-            lbMail.SelectedIndex = 0;
+        private static ClientForm _instance;
 
-            this.Text = userPackage.Login;
+        public static ClientForm GetInstance(UserPackage userPackage)
+        {
+            if (_instance == null)
+                _instance = new ClientForm(userPackage);
+            return _instance;
+        }
+        private ClientForm(UserPackage userPackage)
+        {
+            try
+            {
+                InitializeComponent();
+                mailer = new Mailer(userPackage);
+                mailMessages = mailer.LoadMail();
+                LoadMailForm();
+                lbMail.SelectedIndex = 0;
+                this.Text = userPackage.Login;
+            }
+            catch (Exception ex)
+            {
+                throw new CustomMailerException("Failed open mail");
+            }
+        }
+
+        private void Reset()
+        {
+            _instance = null;  
         }
 
         private void LoadMailForm()
@@ -71,7 +90,7 @@ namespace MailerGUI
                     message.Attachments.Add(attachment);
                 mailer.SendMail(message);
 
-            }catch (CustomSmtpException ex)
+            }catch (CustomMailerException ex)
             {
                 MessageBox.Show(ex.Message);
             }
@@ -108,6 +127,11 @@ namespace MailerGUI
             {
                 btnSend.Enabled = true;
             }
+        }
+
+        private void ClientForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            this.Reset();   
         }
     }
 }

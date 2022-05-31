@@ -264,6 +264,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "ClientForm";
             this.Text = "MailClient";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ClientForm_FormClosing);
             this.tabMailer.ResumeLayout(false);
             this.tabMail.ResumeLayout(false);
             this.panContent.ResumeLayout(false);
