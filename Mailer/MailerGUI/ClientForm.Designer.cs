@@ -113,20 +113,20 @@
             // 
             this.rtbContent.BackColor = System.Drawing.SystemColors.HighlightText;
             this.rtbContent.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.rtbContent.Location = new System.Drawing.Point(36, 144);
+            this.rtbContent.Location = new System.Drawing.Point(36, 156);
             this.rtbContent.Name = "rtbContent";
             this.rtbContent.ReadOnly = true;
-            this.rtbContent.Size = new System.Drawing.Size(550, 324);
+            this.rtbContent.Size = new System.Drawing.Size(550, 312);
             this.rtbContent.TabIndex = 3;
             this.rtbContent.Text = "";
             // 
             // lblDate
             // 
             this.lblDate.AutoSize = true;
-            this.lblDate.Font = new System.Drawing.Font("Arial Narrow", 10.2F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point);
-            this.lblDate.Location = new System.Drawing.Point(462, 99);
+            this.lblDate.Font = new System.Drawing.Font("Arial Narrow", 10.8F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point);
+            this.lblDate.Location = new System.Drawing.Point(437, 99);
             this.lblDate.Name = "lblDate";
-            this.lblDate.Size = new System.Drawing.Size(66, 22);
+            this.lblDate.Size = new System.Drawing.Size(67, 22);
             this.lblDate.TabIndex = 2;
             this.lblDate.Text = "MailDate";
             // 

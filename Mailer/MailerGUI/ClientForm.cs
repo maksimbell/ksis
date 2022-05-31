@@ -81,7 +81,7 @@ namespace MailerGUI
             try
             {
                 MailMessage message = new MailMessage();
-                message.From = new MailAddress(this.Text);
+                message.From = new MailAddress(this.Text, "MailerUser");
                 message.To.Add(rtbToSend.Text);
                 message.Subject = rtbSubSend.Text;
                 message.Body = rtbMessageSend.Text;
