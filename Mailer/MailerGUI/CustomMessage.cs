@@ -7,19 +7,22 @@ using System.Threading.Tasks;
 
 namespace MailerGUI
 {
-    public class MailMessage
+    public class CustomMessage
     {
         public string Subject { get; set; }
         public TextPart Body { get; set; }
         public DateTimeOffset Date { get; set; }
         public InternetAddressList Sender { get; set; }
+        public InternetAddressList Recipient { get; set; }
 
-        public MailMessage(string sub, TextPart body, DateTimeOffset date, InternetAddressList sender)
+        public CustomMessage(string sub, TextPart body, DateTimeOffset date, 
+            InternetAddressList sender, InternetAddressList recipient)
         {
             this.Subject = sub;
             this.Body = body;
             this.Date = date;
             this.Sender = sender;
+            this.Recipient = recipient;
         }
     }
 }

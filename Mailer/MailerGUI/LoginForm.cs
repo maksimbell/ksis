@@ -19,7 +19,9 @@ namespace MailerGUI
                 passwordArea.Text, int.Parse(tbPort.Text), cbServer.Text, cbSsl.Checked);
 
             ClientForm clientForm = new ClientForm(userPackage);
+
             clientForm.Show();
+            //this.Hide();
         }
 
         private void cbSsl_CheckedChanged(object sender, EventArgs e)
@@ -29,7 +31,7 @@ namespace MailerGUI
 
         private void LoginForm_Load(object sender, EventArgs e)
         {
-            cbServer.Items.Add("imap.gmail.com");
+            cbServer.Items.Add("gmail.com");
             cbServer.SelectedIndex = 0;
 
             tbPort.Text = "993";

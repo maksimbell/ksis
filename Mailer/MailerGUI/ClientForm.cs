@@ -11,13 +11,16 @@ using MailKit;
 using MailKit.Net.Imap;
 using MailKit.Search;
 using MimeKit;
+using System.Net.Mail;
 
 namespace MailerGUI
 {
     public partial class ClientForm : Form
     {
         private Mailer mailer;
-        private List<MailMessage> mailMessages;
+        private List<CustomMessage> mailMessages;
+        private List<Attachment> attachments = new List<Attachment>();
+        //private MailMessage message;
         public ClientForm(UserPackage userPackage)
         {
             InitializeComponent();
@@ -25,6 +28,8 @@ namespace MailerGUI
             mailMessages = mailer.LoadMail();
             LoadMailForm();
             lbMail.SelectedIndex = 0;
+
+            this.Text = userPackage.Login;
         }
 
         private void LoadMailForm()
@@ -37,31 +42,6 @@ namespace MailerGUI
                 lbMail.Items.Add(mailString);
                 
             }
-        }
-
-        private void MailClient_Load(object sender, EventArgs e)
-        {
-            //lbMail.ItemHeight = 100;
-        }
-
-        private void MailClient_FormClosed(object sender, FormClosedEventArgs e)
-        {
-            //LoginForm.ActiveForm.Show();
-        }
-
-        private void tabMail_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void gridMail_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-
-        }
-
-        private void gridMail_CellClick(object sender, DataGridViewCellEventArgs e)
-        {
-
         }
 
         private void lbMail_SelectedIndexChanged(object sender, EventArgs e)
@@ -77,24 +57,57 @@ namespace MailerGUI
             rtbContent.Text = mailMessages[index].Body.Text;
         }
 
-        private void lblSubject_Click(object sender, EventArgs e)
+        private void btnSend_Click(object sender, EventArgs e)
         {
+            try
+            {
+                MailMessage message = new MailMessage();
+                message.From = new MailAddress(this.Text);
+                message.To.Add(rtbToSend.Text);
+                message.Subject = rtbSubSend.Text;
+                message.Body = rtbMessageSend.Text;
+                message.IsBodyHtml = false;
+                foreach (Attachment attachment in attachments)
+                    message.Attachments.Add(attachment);
+                mailer.SendMail(message);
 
+            }catch (CustomSmtpException ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                MessageBox.Show("Message sent");
+            }
         }
 
-        private void lblDate_Click(object sender, EventArgs e)
+        private void btnAttach_Click(object sender, EventArgs e)
         {
-
+            OpenFileDialog dialog = new OpenFileDialog();
+            if (DialogResult.OK == dialog.ShowDialog())
+            {
+                string path = dialog.FileName;
+                attachments.Add(new Attachment(path));
+                tvAttachments.Nodes.Add(dialog.FileName.Split("\\")[^1]);
+            }
         }
 
-        private void lblSenderOrg_Click(object sender, EventArgs e)
+        private void tvAttachments_DoubleClick(object sender, EventArgs e)
         {
-
+            attachments.RemoveAt(tvAttachments.SelectedNode.Index);
+            tvAttachments.SelectedNode.Remove();
         }
 
-        private void richTextBox1_TextChanged(object sender, EventArgs e)
+        private void rtbToSend_TextChanged(object sender, EventArgs e)
         {
-
+            if(this.Text == "")
+            {
+                btnSend.Enabled = false;
+            }
+            else
+            {
+                btnSend.Enabled = true;
+            }
         }
     }
 }
