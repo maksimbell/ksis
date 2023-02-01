@@ -14,15 +14,17 @@ namespace MailerGUI
         public DateTimeOffset Date { get; set; }
         public InternetAddressList Sender { get; set; }
         public InternetAddressList Recipient { get; set; }
+        public List<MimeEntity> Attachments { get; set; }
 
         public CustomMessage(string sub, TextPart body, DateTimeOffset date, 
-            InternetAddressList sender, InternetAddressList recipient)
+            InternetAddressList sender, InternetAddressList recipient, List<MimeEntity> attachments)
         {
             this.Subject = sub;
             this.Body = body;
             this.Date = date;
             this.Sender = sender;
             this.Recipient = recipient;
+            this.Attachments = attachments;
         }
     }
 }

@@ -46,7 +46,7 @@
             // loginArea
             // 
             this.loginArea.Font = new System.Drawing.Font("Segoe UI", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.loginArea.Location = new System.Drawing.Point(12, 50);
+            this.loginArea.Location = new System.Drawing.Point(25, 62);
             this.loginArea.Name = "loginArea";
             this.loginArea.Size = new System.Drawing.Size(262, 38);
             this.loginArea.TabIndex = 0;
@@ -55,7 +55,7 @@
             // passwordArea
             // 
             this.passwordArea.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.passwordArea.Location = new System.Drawing.Point(12, 106);
+            this.passwordArea.Location = new System.Drawing.Point(25, 118);
             this.passwordArea.Name = "passwordArea";
             this.passwordArea.Size = new System.Drawing.Size(262, 38);
             this.passwordArea.TabIndex = 1;
@@ -63,7 +63,7 @@
             // 
             // btnLogin
             // 
-            this.btnLogin.Location = new System.Drawing.Point(12, 167);
+            this.btnLogin.Location = new System.Drawing.Point(90, 177);
             this.btnLogin.Name = "btnLogin";
             this.btnLogin.Size = new System.Drawing.Size(125, 37);
             this.btnLogin.TabIndex = 2;
@@ -81,7 +81,7 @@
             // 
             // tbPort
             // 
-            this.tbPort.Location = new System.Drawing.Point(27, 60);
+            this.tbPort.Location = new System.Drawing.Point(27, 49);
             this.tbPort.Name = "tbPort";
             this.tbPort.Size = new System.Drawing.Size(151, 27);
             this.tbPort.TabIndex = 4;
@@ -89,7 +89,7 @@
             // lblPort
             // 
             this.lblPort.AutoSize = true;
-            this.lblPort.Location = new System.Drawing.Point(27, 31);
+            this.lblPort.Location = new System.Drawing.Point(27, 26);
             this.lblPort.Name = "lblPort";
             this.lblPort.Size = new System.Drawing.Size(35, 20);
             this.lblPort.TabIndex = 5;
@@ -119,19 +119,19 @@
             // 
             this.panSettings.Controls.Add(this.cbServer);
             this.panSettings.Controls.Add(this.cbSsl);
+            this.panSettings.Controls.Add(this.lblPort);
             this.panSettings.Controls.Add(this.tbPort);
             this.panSettings.Controls.Add(this.lblServer);
-            this.panSettings.Controls.Add(this.lblPort);
-            this.panSettings.Location = new System.Drawing.Point(34, 111);
+            this.panSettings.Location = new System.Drawing.Point(176, 496);
             this.panSettings.Name = "panSettings";
-            this.panSettings.Size = new System.Drawing.Size(210, 212);
+            this.panSettings.Size = new System.Drawing.Size(210, 223);
             this.panSettings.TabIndex = 8;
             // 
             // lblLogin
             // 
             this.lblLogin.AutoSize = true;
             this.lblLogin.Font = new System.Drawing.Font("Segoe UI", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.lblLogin.Location = new System.Drawing.Point(12, 3);
+            this.lblLogin.Location = new System.Drawing.Point(112, 10);
             this.lblLogin.Name = "lblLogin";
             this.lblLogin.Size = new System.Drawing.Size(93, 38);
             this.lblLogin.TabIndex = 9;
@@ -143,16 +143,16 @@
             this.panLogin.Controls.Add(this.lblLogin);
             this.panLogin.Controls.Add(this.loginArea);
             this.panLogin.Controls.Add(this.btnLogin);
-            this.panLogin.Location = new System.Drawing.Point(308, 111);
+            this.panLogin.Location = new System.Drawing.Point(178, 54);
             this.panLogin.Name = "panLogin";
-            this.panLogin.Size = new System.Drawing.Size(311, 212);
+            this.panLogin.Size = new System.Drawing.Size(318, 234);
             this.panLogin.TabIndex = 10;
             // 
             // LoginForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(669, 450);
+            this.ClientSize = new System.Drawing.Size(669, 375);
             this.Controls.Add(this.panLogin);
             this.Controls.Add(this.panSettings);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;

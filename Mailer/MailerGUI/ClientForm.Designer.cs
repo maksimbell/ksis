@@ -30,8 +30,10 @@
         {
             this.tabMailer = new System.Windows.Forms.TabControl();
             this.tabMail = new System.Windows.Forms.TabPage();
+            this.btnReload = new System.Windows.Forms.Button();
             this.lbMail = new System.Windows.Forms.ListBox();
             this.panContent = new System.Windows.Forms.Panel();
+            this.tvMailAtt = new System.Windows.Forms.TreeView();
             this.rtbSubject = new System.Windows.Forms.RichTextBox();
             this.rtbContent = new System.Windows.Forms.RichTextBox();
             this.lblDate = new System.Windows.Forms.Label();
@@ -45,6 +47,7 @@
             this.rtbToSend = new System.Windows.Forms.RichTextBox();
             this.llblSub = new System.Windows.Forms.LinkLabel();
             this.llblTo = new System.Windows.Forms.LinkLabel();
+            this.SaveFileDialog = new System.Windows.Forms.SaveFileDialog();
             this.tabMailer.SuspendLayout();
             this.tabMail.SuspendLayout();
             this.panContent.SuspendLayout();
@@ -63,6 +66,7 @@
             // 
             // tabMail
             // 
+            this.tabMail.Controls.Add(this.btnReload);
             this.tabMail.Controls.Add(this.lbMail);
             this.tabMail.Controls.Add(this.panContent);
             this.tabMail.Location = new System.Drawing.Point(4, 29);
@@ -73,6 +77,16 @@
             this.tabMail.Text = "Mail";
             this.tabMail.UseVisualStyleBackColor = true;
             // 
+            // btnReload
+            // 
+            this.btnReload.Location = new System.Drawing.Point(385, 7);
+            this.btnReload.Name = "btnReload";
+            this.btnReload.Size = new System.Drawing.Size(106, 26);
+            this.btnReload.TabIndex = 3;
+            this.btnReload.Text = "Refresh";
+            this.btnReload.UseVisualStyleBackColor = true;
+            this.btnReload.Click += new System.EventHandler(this.btnReload_Click_1);
+            // 
             // lbMail
             // 
             this.lbMail.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
@@ -80,14 +94,15 @@
             this.lbMail.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.lbMail.FormattingEnabled = true;
             this.lbMail.ItemHeight = 28;
-            this.lbMail.Location = new System.Drawing.Point(6, 6);
+            this.lbMail.Location = new System.Drawing.Point(6, 39);
             this.lbMail.Name = "lbMail";
-            this.lbMail.Size = new System.Drawing.Size(485, 478);
+            this.lbMail.Size = new System.Drawing.Size(485, 450);
             this.lbMail.TabIndex = 2;
             this.lbMail.SelectedIndexChanged += new System.EventHandler(this.lbMail_SelectedIndexChanged);
             // 
             // panContent
             // 
+            this.panContent.Controls.Add(this.tvMailAtt);
             this.panContent.Controls.Add(this.rtbSubject);
             this.panContent.Controls.Add(this.rtbContent);
             this.panContent.Controls.Add(this.lblDate);
@@ -96,6 +111,17 @@
             this.panContent.Name = "panContent";
             this.panContent.Size = new System.Drawing.Size(627, 483);
             this.panContent.TabIndex = 1;
+            // 
+            // tvMailAtt
+            // 
+            this.tvMailAtt.BackColor = System.Drawing.SystemColors.HighlightText;
+            this.tvMailAtt.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.tvMailAtt.Location = new System.Drawing.Point(320, 398);
+            this.tvMailAtt.Name = "tvMailAtt";
+            this.tvMailAtt.ShowNodeToolTips = true;
+            this.tvMailAtt.Size = new System.Drawing.Size(266, 70);
+            this.tvMailAtt.TabIndex = 8;
+            this.tvMailAtt.DoubleClick += new System.EventHandler(this.tvMailAtt_DoubleClick);
             // 
             // rtbSubject
             // 
@@ -294,5 +320,8 @@
         private Button btnSend;
         private Button btnAttach;
         private TreeView tvAttachments;
+        private Button btnReload;
+        private TreeView tvMailAtt;
+        private SaveFileDialog SaveFileDialog;
     }
 }

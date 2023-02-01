@@ -42,15 +42,22 @@ namespace MailerGUI
 
             List<CustomMessage> mail = new List<CustomMessage>();
 
-            for (int i = 0; i < 5; i++)
+            for (int i = 0; i < 10; i++)
             {
                 var message = Imap.Inbox.GetMessage(uids.Count - i - 1);
+                List<MimeEntity> attachments = new List<MimeEntity>();
+
+                foreach (var attachment in message.Attachments)
+                {
+                    attachments.Add(attachment);
+                }
                 mail.Add(new CustomMessage(
                     message.Subject,
                     (TextPart)message.BodyParts.OfType<TextPart>().FirstOrDefault(),
                     message.Date,
                     message.From,
-                    message.To)
+                    message.To,
+                    attachments)
                    );
             }
             return mail;

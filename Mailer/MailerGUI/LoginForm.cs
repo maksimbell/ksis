@@ -15,16 +15,21 @@ namespace MailerGUI
             InitializeComponent();
         }
 
-        private void btnLogin_Click(object sender, EventArgs e)
+        public void Login()
+        {
+            userPackage = new UserPackage(loginArea.Text,
+                    passwordArea.Text, int.Parse(tbPort.Text), loginArea.Text.Split("@")[1], cbSsl.Checked);
+
+            clientForm = ClientForm.GetInstance(userPackage);
+            clientForm.Show();
+            clientForm.BringToFront();
+        }
+
+        private async void btnLogin_Click(object sender, EventArgs e)
         {
             try
             {
-                userPackage = new UserPackage(loginArea.Text,
-                    passwordArea.Text, int.Parse(tbPort.Text), cbServer.Text, cbSsl.Checked);
-
-                 clientForm = ClientForm.GetInstance(userPackage);
-                clientForm.Show();
-                clientForm.BringToFront();
+                Login();
             }
             catch (CustomMailerException ex)
             {
@@ -45,8 +50,6 @@ namespace MailerGUI
             tbPort.Text = "993";
             cbSsl.Checked = true;
 
-            loginArea.Text = "jealousdorr@gmail.com";
-            passwordArea.Text = "bswtpzwybiichuhh";
         }
 
         private void LoginForm_FormClosed(object sender, FormClosedEventArgs e)

@@ -42,7 +42,7 @@ namespace MailerGUI
             }
             catch (Exception ex)
             {
-                throw new CustomMailerException("Failed open mail");
+                throw new CustomMailerException("Failed open mail.");
             }
         }
 
@@ -66,6 +66,14 @@ namespace MailerGUI
         private void lbMail_SelectedIndexChanged(object sender, EventArgs e)
         {
             LoadMessageContent(lbMail.SelectedIndex);
+            if (tvMailAtt.Nodes.Count == 0)
+            {
+                tvMailAtt.Visible = false;
+            }
+            else
+            {
+                tvMailAtt.Visible = true;
+            }
         }
 
         private void LoadMessageContent(int index)
@@ -74,6 +82,12 @@ namespace MailerGUI
             lblSenderOrg.Text = mailMessages[index].Sender[0].Name;
             lblDate.Text = mailMessages[index].Date.ToString().Substring(0, 10);
             rtbContent.Text = mailMessages[index].Body.Text;
+            tvMailAtt.Nodes.Clear();
+            foreach(var attachment in mailMessages[index].Attachments)
+            {
+                string fileName = attachment.ContentDisposition?.FileName ?? attachment.ContentType.Name;
+                tvMailAtt.Nodes.Add(fileName);
+            }
         }
 
         private void btnSend_Click(object sender, EventArgs e)
@@ -86,17 +100,24 @@ namespace MailerGUI
                 message.Subject = rtbSubSend.Text;
                 message.Body = rtbMessageSend.Text;
                 message.IsBodyHtml = false;
+
                 foreach (Attachment attachment in attachments)
                     message.Attachments.Add(attachment);
                 mailer.SendMail(message);
 
-            }catch (CustomMailerException ex)
+                rtbSubSend.Text = String.Empty;
+                rtbMessageSend.Text = String.Empty;
+                tvAttachments.Nodes.Clear();
+                attachments.Clear();
+
+            }
+            catch (CustomMailerException ex)
             {
                 MessageBox.Show(ex.Message);
             }
             finally
             {
-                MessageBox.Show("Message sent");
+                MessageBox.Show("Message sent.");
             }
         }
 
@@ -132,6 +153,52 @@ namespace MailerGUI
         private void ClientForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             this.Reset();   
+        }
+
+        private void BtnReload_Click(object sender, EventArgs e)
+        {
+        }
+
+        private void tvMailAtt_DoubleClick(object sender, EventArgs e)
+        {
+            if (tvMailAtt.Nodes.Count != 0)
+            {
+                SaveAttachment(mailMessages[lbMail.SelectedIndex].Attachments[tvMailAtt.SelectedNode.Index]);
+            }
+        }
+
+        private void SaveAttachment(MimeEntity att)
+        {
+            using (var fbd = new FolderBrowserDialog())
+            {
+                DialogResult result = fbd.ShowDialog();
+
+                if (result == DialogResult.OK && !string.IsNullOrWhiteSpace(fbd.SelectedPath))
+                {
+                    string fileName = att.ContentDisposition?.FileName ?? att.ContentType.Name;
+                    SaveFileDialog.FileName = fileName;
+
+                    using (System.IO.FileStream fs = System.IO.File.Create(fbd.SelectedPath +"\\"+ fileName))
+                    {
+                        try
+                        {
+                            var part = (MimePart)att;
+                            part.Content.DecodeTo(fs);
+                            MessageBox.Show("File saved.");
+                        }catch (Exception ex)
+                        {
+
+                        }
+                    }
+                }
+            }
+        }
+
+        private void btnReload_Click_1(object sender, EventArgs e)
+        {
+            lbMail.Items.Clear();
+            mailMessages = mailer.LoadMail();
+            LoadMailForm();
         }
     }
 }
